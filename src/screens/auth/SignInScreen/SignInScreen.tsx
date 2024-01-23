@@ -1,25 +1,34 @@
 import React from 'react';
+
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
 
 import {Button} from '../../../components/Button/Button';
-import {PasswordInput} from '../../../components/PasswordInput/PasswordInput';
+import {FormPasswordInput} from '../../../components/Form/FormPasswordInput';
+import {FormTextInput} from '../../../components/Form/FormTextInput';
 import {Screen} from '../../../components/Screen/Screen';
 import {Text} from '../../../components/Text/Text';
-import {TextInput} from '../../../components/TextInput/TextInput';
 import {RootStackParamsList} from '../../../routes/Routes';
+import {SignInSchema, signInSchema} from './signInSchema';
 
 type ScreenProps = NativeStackScreenProps<RootStackParamsList, 'SignInScreen'>;
 
 export function SignInScreen({navigation}: ScreenProps) {
+  const {control, formState, handleSubmit} = useForm<SignInSchema>({
+    resolver: zodResolver(signInSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    mode: 'onChange',
+  });
+
+  function onSubmitForm({email, password}: SignInSchema) {
+    console.log({email, password});
+  }
+
   function handleNavigateToSignUpScreen() {
-    // navigation.navigate('SuccessScreen', {
-    //   title: 'Sua conta foi criada com sucesso',
-    //   description: 'Agora é só fazer login na nossa plataforma',
-    //   icon: {
-    //     name: 'checkRound',
-    //     color: 'success',
-    //   },
-    // });
     navigation.navigate('SignUpScreen');
   }
 
@@ -36,21 +45,23 @@ export function SignInScreen({navigation}: ScreenProps) {
         Digite seu e-mail e senha para entrar
       </Text>
 
-      <TextInput
+      <FormTextInput
+        control={control}
+        name="email"
         label="E-mail"
         placeholder="Digite seu e-mail"
-        errorMessage="Mensagem de error"
         boxProps={{mb: 's20'}}
       />
 
-      <PasswordInput
-        label="Senha"
+      <FormPasswordInput
+        control={control}
+        name="password"
         placeholder="Digite sua senha"
-        boxProps={{mb: 's10'}}
+        label="Senha"
+        boxProps={{mb: 's20'}}
       />
 
       <Text
-        mt="s10"
         preset="paragraphSmall"
         color="primary"
         bold
@@ -58,7 +69,12 @@ export function SignInScreen({navigation}: ScreenProps) {
         Esqueci minha senha
       </Text>
 
-      <Button title="Entrar" mt="s48" onPress={() => {}} />
+      <Button
+        disabled={!formState.isValid}
+        title="Entrar"
+        mt="s48"
+        onPress={handleSubmit(onSubmitForm)}
+      />
       <Button
         title="Criar conta"
         mt="s12"
