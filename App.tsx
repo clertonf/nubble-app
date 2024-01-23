@@ -1,29 +1,17 @@
 import React from 'react';
-import {SafeAreaView} from 'react-native';
 import {ThemeProvider} from '@shopify/restyle';
-
-import {Text} from './src/components/Text/Text';
-import {Button} from './src/components/Button/Button';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 import {theme} from './src/theme/theme';
-import {Box} from './src/components/Box/Box';
-import {Icon} from './src/components/Icon/Icon';
+import {Router} from './src/routes/Routes';
 
 function App(): React.JSX.Element {
   return (
-    <ThemeProvider theme={theme}>
-      <SafeAreaView>
-        <Box style={{paddingHorizontal: 20, gap: 12}}>
-          <Text preset="headingLarge" italic>
-            Hello World!
-          </Text>
-          <Button title="Primary" preset="primary" />
-          <Button title="Outline" preset="outline" />
-
-          <Icon name="chevronRight" />
-        </Box>
-      </SafeAreaView>
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <ThemeProvider theme={theme}>
+        <Router />
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 }
 

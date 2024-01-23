@@ -1,4 +1,5 @@
 import React from 'react';
+import {Pressable} from 'react-native';
 
 import {useAppTheme} from '../../hooks/useAppThemes';
 import {ThemeColors} from '../../theme/theme';
@@ -30,21 +31,37 @@ import {ProfileFillIcon} from '../../assets/icons/ProfileFillIcon';
 import {SearchIcon} from '../../assets/icons/SearchIcon';
 import {SettingsIcon} from '../../assets/icons/SettingsIcon';
 import {TrashIcon} from '../../assets/icons/TrashIcon';
+import {CheckRoundIcon} from '../../assets/icons/CheckRoundIcon';
+import {MessageRoundIcon} from '../../assets/icons/MessageRoundIcon';
 
 export interface IconBase {
   size?: number;
   color?: string;
 }
 
-interface IconProps {
+export interface IconProps {
   name: IconNames;
   color?: ThemeColors;
   size?: number;
+  onPress?: () => void;
 }
 
-export function Icon({name, color = 'backgroundContrast', size}: IconProps) {
+export function Icon({
+  name,
+  color = 'backgroundContrast',
+  size,
+  onPress,
+}: IconProps) {
   const {colors} = useAppTheme();
   const SVGIcon = iconRegistry[name];
+
+  if (onPress) {
+    return (
+      <Pressable hitSlop={10} onPress={onPress}>
+        <SVGIcon color={colors[color]} size={size} />
+      </Pressable>
+    );
+  }
 
   return <SVGIcon color={colors[color]} size={size} />;
 }
@@ -77,6 +94,8 @@ const iconRegistry = {
   search: SearchIcon,
   settings: SettingsIcon,
   trash: TrashIcon,
+  checkRound: CheckRoundIcon,
+  messageRound: MessageRoundIcon,
 };
 
 type IconType = typeof iconRegistry;
