@@ -1,12 +1,8 @@
 import React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-import {Screen} from '../../../components/Screen/Screen';
-import {Icon} from '../../../components/Icon/Icon';
-import {Text} from '../../../components/Text/Text';
-import {Button} from '../../../components/Button/Button';
-
-import {RootStackParamsList} from '../../../routes/Routes';
+import {Button, Icon, Screen, Text} from '@components';
+import {RootStackParamsList} from '@routes';
 
 type ScreenProps = NativeStackScreenProps<RootStackParamsList, 'SuccessScreen'>;
 

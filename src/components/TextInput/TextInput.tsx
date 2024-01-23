@@ -6,9 +6,9 @@ import {
   TextInputProps as RNTextInputProps,
   TextStyle,
 } from 'react-native';
-import {$fontFamily, $fontSizes, Text} from '../Text/Text';
-import {Box, BoxProps} from '../Box/Box';
-import {useAppTheme} from '../../hooks/useAppThemes';
+
+import {$fontFamily, $fontSizes, Text, Box, BoxProps} from '@components';
+import {useAppTheme} from '@hooks';
 
 export interface TextInputProps extends RNTextInputProps {
   label?: string;
@@ -50,6 +50,7 @@ export function TextInput({
           <Box {...$textInputContainer}>
             <RNTextInput
               autoCapitalize="none"
+              autoCorrect={false}
               ref={inputRef}
               placeholderTextColor={colors.gray2}
               style={$textInputStyle}
