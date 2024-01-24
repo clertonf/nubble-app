@@ -1,9 +1,9 @@
 import React from 'react';
-
 import {
   TouchableOpacity,
   TouchableOpacityProps as RNTouchableOpacityProps,
 } from 'react-native';
+
 import {
   createBox,
   createRestyleComponent,
